@@ -1,4 +1,4 @@
-# PaperBuddy / 论笔
+# PaperBuddy / 文润
 
 PaperBuddy is a Vercel-ready academic writing assistant for paper polishing, PDF paper understanding, and AI Q&A. It uses a server-side OpenAI-compatible chat completions API, with NVIDIA's endpoint and `openai/gpt-oss-120b` as the default configuration.
 
