@@ -29,18 +29,25 @@ export function buildPolishSystemPrompt(mode: PolishMode, language: Language): s
 【原文】
 （在此原样复制该段原文）
 
+【中文翻译】
+（在此输出该段原文的忠实中文翻译；若原文已经是中文，则输出忠实、通顺但不额外润色的中文释义）
+
 【问题分析】
 （列举该段存在的具体问题，每条以"- "开头；若无问题，写"- 表达准确，无需修改"）
 
 【润色结果】
 （在此输出润色后的段落全文）
+
+【润色后中文翻译】
+（在此输出润色结果的中文翻译；若润色结果已经是中文，则输出忠实、通顺的中文释义）
 ---PARA_END---
 
 注意事项：
 1. 每个段落对应一个 ---PARA_START--- 到 ---PARA_END--- 块，不可合并
 2. 不要在块外输出任何额外文字（包括开头的问候语、结尾的总结语）
 3. 论文语言为：${LANGUAGE_LABELS[language]}，请使用相同语言进行润色
-4. 如遇专业术语，保留原术语不做翻译`;
+4. 如遇专业术语，保留原术语不做翻译
+5. 中文翻译必须准确反映原文和润色结果，不要加入原文没有的信息`;
 }
 
 export function buildChatSystemPrompt(pdfContent: string): string {

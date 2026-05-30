@@ -38,17 +38,42 @@ export function ChatWindow({
   onRetry
 }: ChatWindowProps) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const shouldAutoScrollRef = useRef(true);
+  const previousMessageCountRef = useRef(0);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({
-      top: scrollRef.current.scrollHeight,
+    const container = scrollRef.current;
+    if (!container) {
+      return;
+    }
+
+    const messageCountChanged = messages.length !== previousMessageCountRef.current;
+    previousMessageCountRef.current = messages.length;
+
+    if (!shouldAutoScrollRef.current && !messageCountChanged) {
+      return;
+    }
+
+    container.scrollTo({
+      top: container.scrollHeight,
       behavior: "smooth"
     });
   }, [messages]);
 
+  function handleScroll() {
+    const container = scrollRef.current;
+    if (!container) {
+      return;
+    }
+
+    const distanceFromBottom =
+      container.scrollHeight - container.scrollTop - container.clientHeight;
+    shouldAutoScrollRef.current = distanceFromBottom < 120;
+  }
+
   return (
     <section className="chat-panel" aria-label="PDF 智能对话">
-      <div className="chat-scroll" ref={scrollRef}>
+      <div className="chat-scroll" ref={scrollRef} onScroll={handleScroll}>
         <article className="assistant-welcome">
           <span className="welcome-icon">
             <Bot size={20} aria-hidden="true" />

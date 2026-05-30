@@ -30,14 +30,30 @@ function parseAnalysis(text: string): string[] {
 }
 
 function parseBlock(rawBlock: string): PolishBlock {
-  const original = extractSection(rawBlock, "【原文】", ["【问题分析】", "【润色结果】"]);
-  const analysis = extractSection(rawBlock, "【问题分析】", ["【润色结果】"]);
-  const polished = extractSection(rawBlock, "【润色结果】", []);
+  const original = extractSection(rawBlock, "【原文】", [
+    "【中文翻译】",
+    "【问题分析】",
+    "【润色结果】",
+    "【润色后中文翻译】"
+  ]);
+  const chineseTranslation = extractSection(rawBlock, "【中文翻译】", [
+    "【问题分析】",
+    "【润色结果】",
+    "【润色后中文翻译】"
+  ]);
+  const analysis = extractSection(rawBlock, "【问题分析】", [
+    "【润色结果】",
+    "【润色后中文翻译】"
+  ]);
+  const polished = extractSection(rawBlock, "【润色结果】", ["【润色后中文翻译】"]);
+  const polishedChineseTranslation = extractSection(rawBlock, "【润色后中文翻译】", []);
 
   return {
     original,
+    chineseTranslation,
     analysis: parseAnalysis(analysis),
-    polished
+    polished,
+    polishedChineseTranslation
   };
 }
 

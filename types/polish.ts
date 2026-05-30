@@ -4,8 +4,10 @@ export type Language = "zh" | "en" | "auto";
 
 export interface PolishBlock {
   original: string;
+  chineseTranslation: string;
   analysis: string[];
   polished: string;
+  polishedChineseTranslation: string;
 }
 
 export interface PolishParseResult {

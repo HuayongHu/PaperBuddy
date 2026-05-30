@@ -33,12 +33,18 @@ describe("parsePolishResult", () => {
       "【原文】",
       "原文一",
       "",
+      "【中文翻译】",
+      "中文翻译一",
+      "",
       "【问题分析】",
       "- 问题一",
       "- 问题二",
       "",
       "【润色结果】",
       "结果一",
+      "",
+      "【润色后中文翻译】",
+      "润色后中文翻译一",
       "---PARA_END---",
       "---PARA_START---",
       "【原文】",
@@ -50,8 +56,10 @@ describe("parsePolishResult", () => {
     expect(parsed.blocks).toEqual([
       {
         original: "原文一",
+        chineseTranslation: "中文翻译一",
         analysis: ["问题一", "问题二"],
-        polished: "结果一"
+        polished: "结果一",
+        polishedChineseTranslation: "润色后中文翻译一"
       }
     ]);
     expect(parsed.pending).toContain("尚未完成");
@@ -62,14 +70,19 @@ describe("parsePolishResult", () => {
       "---PARA_START---",
       "【原文】",
       "Original",
+      "【中文翻译】",
+      "原文中文翻译",
       "【问题分析】",
       "No issues.",
       "【润色结果】",
       "Polished",
+      "【润色后中文翻译】",
+      "润色中文翻译",
       "---PARA_END---"
     ].join("\n");
 
     expect(parsePolishResult(raw).blocks[0].analysis).toEqual(["No issues."]);
+    expect(parsePolishResult(raw).blocks[0].chineseTranslation).toBe("原文中文翻译");
   });
 });
 
@@ -121,6 +134,8 @@ describe("prompts", () => {
 
     expect(prompt).toContain("学术加强");
     expect(prompt).toContain("论文语言为：英文");
+    expect(prompt).toContain("【中文翻译】");
+    expect(prompt).toContain("【润色后中文翻译】");
     expect(prompt).not.toContain("{{");
   });
 

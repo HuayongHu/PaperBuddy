@@ -1,6 +1,13 @@
 "use client";
 
-import { CheckCircle2, ChevronDown, ChevronUp, FileText, TriangleAlert } from "lucide-react";
+import {
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  Languages,
+  Sparkles,
+  TriangleAlert
+} from "lucide-react";
 import { useState } from "react";
 
 import { CopyButton } from "@/components/ui/CopyButton";
@@ -31,16 +38,16 @@ export function AnnotationCard({ block, index }: AnnotationCardProps) {
 
       {!collapsed && (
         <div className="annotation-card-body">
-          <section className="annotation-section">
+          <section className="annotation-tile translation-tile">
             <h4>
-              <FileText size={16} aria-hidden="true" />
-              原文
+              <Languages size={16} aria-hidden="true" />
+              原文中文翻译
             </h4>
-            <div className="original-box">{block.original}</div>
+            <div>{block.chineseTranslation || "未返回原文中文翻译。"}</div>
           </section>
 
-          <section className="annotation-section">
-            <h4 className="issue-title">
+          <section className="annotation-tile issue-tile">
+            <h4>
               <TriangleAlert size={16} aria-hidden="true" />
               问题分析
             </h4>
@@ -51,15 +58,23 @@ export function AnnotationCard({ block, index }: AnnotationCardProps) {
             </ul>
           </section>
 
-          <section className="annotation-section">
+          <section className="annotation-tile polished-tile">
             <div className="annotation-section-title-row">
-              <h4 className="polished-title">
+              <h4>
                 <CheckCircle2 size={16} aria-hidden="true" />
                 润色结果
               </h4>
               <CopyButton text={block.polished} label="复制本段" />
             </div>
-            <div className="polished-box">{block.polished}</div>
+            <div>{block.polished}</div>
+          </section>
+
+          <section className="annotation-tile polished-translation-tile">
+            <h4>
+              <Sparkles size={16} aria-hidden="true" />
+              润色后中文翻译
+            </h4>
+            <div>{block.polishedChineseTranslation || "未返回润色后中文翻译。"}</div>
           </section>
         </div>
       )}
