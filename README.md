@@ -4,6 +4,28 @@ PaperBuddy is a Vercel-ready academic writing assistant for paper polishing, PDF
 
 PaperBuddy 是一个可部署到 Vercel 的学术论文辅助网页应用，支持论文文字点评润色、PDF 文献理解和基于论文内容的 AI 问答。项目默认使用 NVIDIA OpenAI-compatible Chat Completions 接口和 `openai/gpt-oss-120b` 模型。
 
+## 界面预览 / Screenshots
+
+文润提供两个主要工作区：论文润色和文献解读。论文润色适合逐段检查学术表达，文献解读适合上传 PDF 后边读边问。
+
+Wenrun has two main workspaces: paper polishing and PDF reading. Use paper polishing to review academic wording paragraph by paragraph, and use PDF reading to ask questions while reading a paper.
+
+### 论文润色 / Paper polishing
+
+复制论文片段后，页面会按段落展示中文翻译、问题分析、润色结果和润色后的中文翻译。
+
+After pasting a paper excerpt, the page shows the Chinese translation, writing issues, polished text, and polished Chinese translation paragraph by paragraph.
+
+![论文润色板块截图](./论文润色板块.jpeg)
+
+### 文献解读 / PDF reading
+
+上传 PDF 后，页面会同时展示论文预览和对话区，适合追问研究问题、方法、结论和公式含义。
+
+After uploading a PDF, the page shows the paper preview and chat area side by side, so you can ask about research questions, methods, conclusions, and formulas.
+
+![文献解读板块截图](./文献解读板块.png)
+
 ---
 
 ## 中文说明
