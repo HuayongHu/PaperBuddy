@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { detectLanguage } from "@/lib/detectLanguage";
 import { buildChatSystemPrompt, buildPolishSystemPrompt } from "@/lib/prompts";
 import { callLLM, createLLMPayload } from "@/lib/llm";
+import { normalizeAssistantMarkdown } from "@/lib/normalizeAssistantMarkdown";
 import { parsePolishResult } from "@/lib/parsePolishResult";
 import {
   createPolishRecord,
@@ -83,6 +84,37 @@ describe("parsePolishResult", () => {
 
     expect(parsePolishResult(raw).blocks[0].analysis).toEqual(["No issues."]);
     expect(parsePolishResult(raw).blocks[0].chineseTranslation).toBe("原文中文翻译");
+  });
+});
+
+describe("normalizeAssistantMarkdown", () => {
+  it("turns model-emitted html breaks into markdown line breaks and lists", () => {
+    const raw =
+      "采用 OTFS 调制；<br>- 在 DD 域建模路径损耗。<br>- 支持物理层安全。";
+
+    expect(normalizeAssistantMarkdown(raw)).toBe(
+      ["采用 OTFS 调制；", "- 在 DD 域建模路径损耗。", "- 支持物理层安全。"].join(
+        "\n"
+      )
+    );
+  });
+
+  it("turns standalone bracketed latex blocks into display math", () => {
+    const raw = [
+      "公式编号为 (6)",
+      "[",
+      "\\gamma_{k,l,i}[n];=;\\frac{P_{k,l}[n];\\alpha_{k,l,i}[n]}{\\sigma^{2}},\\qquad i\\in{b,e}",
+      "]"
+    ].join("\n");
+
+    expect(normalizeAssistantMarkdown(raw)).toBe(
+      [
+        "公式编号为 (6)",
+        "$$",
+        "\\gamma_{k,l,i}[n] = \\frac{P_{k,l}[n] \\alpha_{k,l,i}[n]}{\\sigma^{2}},\\qquad i\\in{b,e}",
+        "$$"
+      ].join("\n")
+    );
   });
 });
 

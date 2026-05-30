@@ -27,7 +27,7 @@ function formatTime(timestamp: number) {
 }
 
 export function PolishHistory({ records, onRestore, onDelete }: PolishHistoryProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <section className="history-panel">

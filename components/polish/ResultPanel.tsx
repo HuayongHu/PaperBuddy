@@ -73,7 +73,7 @@ export function ResultPanel({
       </div>
 
       {isLoading && !pending && (
-        <div className="streaming-hint">正在接收模型输出...</div>
+        <div className="streaming-hint">当前服务器负载正常，模型正在思考中，请稍后....</div>
       )}
       {interrupted && (
         <div className="warning-note">响应中断，以上内容可能不完整。</div>
