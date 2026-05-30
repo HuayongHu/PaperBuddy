@@ -3,11 +3,26 @@ import { render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
 import { PolishHistory } from "@/components/polish/PolishHistory";
 import { ResultPanel } from "@/components/polish/ResultPanel";
 
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/"
+}));
+
 afterEach(() => {
   vi.useRealTimers();
+});
+
+describe("Navbar", () => {
+  it("uses Wenrun branding and the configured logo", () => {
+    render(<Navbar />);
+
+    expect(screen.getByText("文润")).toBeInTheDocument();
+    expect(screen.queryByText("论笔")).not.toBeInTheDocument();
+    expect(screen.getByAltText("")).toHaveAttribute("src", "/logo.jpg");
+  });
 });
 
 describe("Footer", () => {

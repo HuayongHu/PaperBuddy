@@ -6,6 +6,14 @@ import { callLLM, createLLMPayload } from "@/lib/llm";
 import { normalizeAssistantMarkdown } from "@/lib/normalizeAssistantMarkdown";
 import { parsePolishResult } from "@/lib/parsePolishResult";
 import {
+  pdfPageMetadata,
+  polishPageMetadata,
+  siteMetadata,
+  siteUrl
+} from "@/lib/siteMetadata";
+import robots from "@/app/robots";
+import sitemap from "@/app/sitemap";
+import {
   createPolishRecord,
   limitPDFChats,
   limitPolishHistory
@@ -177,6 +185,56 @@ describe("prompts", () => {
     expect(prompt).toContain("===== 论文全文开始 =====");
     expect(prompt).toContain("Abstract text");
     expect(prompt).toContain("===== 论文全文结束 =====");
+  });
+});
+
+describe("site metadata", () => {
+  it("uses Wenrun branding and SEO metadata", () => {
+    expect(siteMetadata.title).toEqual({
+      default: "文润 - 帮您写好论文读懂文献",
+      template: "%s | 文润"
+    });
+    expect(siteMetadata.description).toContain("论文文字点评润色");
+    expect(siteMetadata.description).toContain("PDF 文献解读");
+    expect(siteMetadata.keywords).toEqual(
+      expect.arrayContaining(["文润", "论文润色", "文献解读", "PDF 问答"])
+    );
+    expect(siteMetadata.icons).toMatchObject({
+      icon: "/favicon.ico",
+      shortcut: "/favicon.ico",
+      apple: "/logo.jpg"
+    });
+  });
+
+  it("exposes crawler-friendly robots and sitemap entries", () => {
+    expect(robots()).toMatchObject({
+      rules: {
+        userAgent: "*",
+        allow: "/"
+      },
+      sitemap: `${siteUrl}/sitemap.xml`
+    });
+
+    expect(sitemap()).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ url: siteUrl }),
+        expect.objectContaining({ url: `${siteUrl}/polish` }),
+        expect.objectContaining({ url: `${siteUrl}/pdf` })
+      ])
+    );
+  });
+
+  it("sets distinct metadata for indexable feature pages", () => {
+    expect(polishPageMetadata).toMatchObject({
+      title: "论文润色",
+      alternates: { canonical: "/polish" }
+    });
+    expect(polishPageMetadata.description).toContain("论文润色");
+    expect(pdfPageMetadata).toMatchObject({
+      title: "文献解读",
+      alternates: { canonical: "/pdf" }
+    });
+    expect(pdfPageMetadata.description).toContain("PDF 文献解读");
   });
 });
 

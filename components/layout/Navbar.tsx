@@ -1,6 +1,7 @@
 "use client";
 
-import { BookOpenText, FileText, PenLine } from "lucide-react";
+import { FileText, PenLine } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -15,8 +16,17 @@ export function Navbar() {
   return (
     <header className="navbar">
       <Link href="/" className="brand" aria-label="返回首页">
-        <BookOpenText size={22} aria-hidden="true" />
-        <span>论笔</span>
+        <Image
+          src="/logo.jpg"
+          alt=""
+          width={28}
+          height={28}
+          className="brand-logo"
+          aria-hidden="true"
+          priority
+          unoptimized
+        />
+        <span>文润</span>
       </Link>
       <nav className="nav-links" aria-label="主导航">
         {navItems.map((item) => {
