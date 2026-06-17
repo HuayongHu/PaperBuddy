@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  "https://paperbuddy.vercel.app";
+  "https://paperbuddy.hhylab.com";
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL(siteUrl),

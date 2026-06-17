@@ -190,6 +190,7 @@ describe("prompts", () => {
 
 describe("site metadata", () => {
   it("uses Wenrun branding and SEO metadata", () => {
+    expect(siteUrl).toBe("https://paperbuddy.hhylab.com");
     expect(siteMetadata.title).toEqual({
       default: "文润 - 帮您写好论文读懂文献",
       template: "%s | 文润"
